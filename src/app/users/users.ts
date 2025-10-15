@@ -1,8 +1,6 @@
 import { Component, OnDestroy, inject, signal } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
-
-// Angular Material modules (se usan en el HTML pero no es necesario importarlos aquí 
-// a menos que sea un componente standalone, que este no lo es)
+import { Student } from './interface/Student';
 
 @Component({
   selector: 'app-users',
@@ -11,25 +9,32 @@ import { MediaMatcher } from '@angular/cdk/layout';
   styleUrl: './users.css',
 })
 export class Users implements OnDestroy {
-  // Lista de navegación de ejemplo
   protected readonly menuItems = [
-  { name: 'Alumnos', route: '/alumnos', icon: 'groups' },
-  { name: 'Clases', route: '/clases', icon: 'school' },
-  { name: 'Cursos', route: '/cursos', icon: 'menu_book' },
-];
+    { name: 'Alumnos'},
+    { name: 'Clases' },
+    { name: 'Cursos' },
+  ];
 
-  // Contenido de ejemplo
-  protected readonly fillerContent = Array.from(
-    { length: 50 },
-    () =>
-      `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-       labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-       laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-       voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-       cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`
-  );
+  // Lista de estudiantes
+  studentsList: Student[] = [
+    { id: 1, nombre: 'Juan', apellido: 'Pérez', email: 'juan.perez@example.com' },
+    { id: 2, nombre: 'María', apellido: 'Gómez', email: 'maria.gomez@example.com' },
+    { id: 3, nombre: 'Carlos', apellido: 'Ramírez', email: 'carlos.ramirez@example.com' },
+    { id: 4, nombre: 'Lucía', apellido: 'Fernández', email: 'lucia.fernandez@example.com' },
+    { id: 5, nombre: 'Diego', apellido: 'Torres', email: 'diego.torres@example.com' },
+    { id: 6, nombre: 'Ana', apellido: 'Martínez', email: 'ana.martinez@example.com' },
+    { id: 7, nombre: 'Sofía', apellido: 'López', email: 'sofia.lopez@example.com' },
+    { id: 8, nombre: 'Matías', apellido: 'Sánchez', email: 'matias.sanchez@example.com' },
+    { id: 9, nombre: 'Valentina', apellido: 'Castro', email: 'valentina.castro@example.com' },
+    { id: 10, nombre: 'Nicolás', apellido: 'Rojas', email: 'nicolas.rojas@example.com' }
+  ];
 
-  // Signal que indica si es una pantalla móvil
+  addStudent(newStudent: Student) {
+    const newId = this.studentsList.length ? Math.max(...this.studentsList.map(s => s.id)) + 1 : 1;
+    newStudent.id = newId;
+    this.studentsList = [...this.studentsList, newStudent];
+  }
+
   protected readonly isMobile = signal(true);
 
   private readonly _mobileQuery: MediaQueryList;
@@ -38,16 +43,13 @@ export class Users implements OnDestroy {
   constructor() {
     const media = inject(MediaMatcher);
 
-    // Detecta si es una pantalla menor a 600px
     this._mobileQuery = media.matchMedia('(max-width: 600px)');
     this.isMobile.set(this._mobileQuery.matches);
 
-    // Escucha cambios de tamaño de pantalla
     this._mobileQueryListener = () => this.isMobile.set(this._mobileQuery.matches);
     this._mobileQuery.addEventListener('change', this._mobileQueryListener);
   }
 
-  // Limpia el listener al destruirse el componente
   ngOnDestroy(): void {
     this._mobileQuery.removeEventListener('change', this._mobileQueryListener);
   }

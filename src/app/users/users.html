@@ -2,9 +2,8 @@
   
   <mat-sidenav #drawer [mode]="isMobile() ? 'over' : 'side'" [opened]="!isMobile()">
     <mat-nav-list>
-      <a mat-list-item *ngFor="let item of menuItems">
-        <mat-icon matListIcon>{{ item.icon }}</mat-icon>
-        <span>{{ item.name }}</span>
+      <a class="menu" mat-list-item *ngFor="let item of menuItems">
+        <span class="menu">{{ item.name }}</span>
       </a>
     </mat-nav-list>
   </mat-sidenav>
@@ -18,9 +17,10 @@
     </mat-toolbar>
 
     <div class="example-sidenav-content">
-      <app-students></app-students>
+      <app-students [students]="studentsList"></app-students>
     </div>
-    <div><app-forms></app-forms>
+    <div class="contenido">
+      <app-forms (studentAdded)="addStudent($event)"></app-forms>
     </div>
   </mat-sidenav-content>
 

@@ -1,1 +1,35 @@
-<p>forms works!</p>
+<div class="formulario">
+
+<form [formGroup]="studentForm" (ngSubmit)="onSubmit()" class="form-container">
+  <mat-form-field appearance="fill" class="full-width datos">
+    <mat-label>Nombre</mat-label>
+    <input matInput formControlName="nombre" />
+    <mat-error *ngIf="studentForm.get('nombre')?.hasError('required')">
+      El nombre es obligatorio
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width datos">
+    <mat-label>Apellido</mat-label>
+    <input matInput formControlName="apellido" />
+    <mat-error *ngIf="studentForm.get('apellido')?.hasError('required')">
+      El apellido es obligatorio
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width datos">
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email" />
+    <mat-error *ngIf="studentForm.get('email')?.hasError('required')">
+      El email es obligatorio
+    </mat-error>
+    <mat-error *ngIf="studentForm.get('email')?.hasError('email')">
+      Formato de email no válido
+    </mat-error>
+  </mat-form-field>
+
+  <button class="boton" mat-raised-button color="primary" type="submit" [disabled]="studentForm.invalid">
+    Agregar Alumno
+  </button>
+</form>
+</div>
