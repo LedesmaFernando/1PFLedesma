@@ -15,7 +15,7 @@ export class Students implements AfterViewInit {
     this.dataSource.data = data;
   }
 
-  displayedColumns: string[] = ['id', 'nombre', 'apellido', 'email'];
+  displayedColumns: string[] = ['id', 'nombreCompleto', 'email'];
   dataSource = new MatTableDataSource<Student>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

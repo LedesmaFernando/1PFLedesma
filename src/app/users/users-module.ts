@@ -16,12 +16,14 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { FullNamePipe } from './pipes/full-name-pipe';
 
 @NgModule({
   declarations: [
     Users,
     Students,
-    Forms
+    Forms,
+    FullNamePipe
   ],
   imports: [
     CommonModule,
